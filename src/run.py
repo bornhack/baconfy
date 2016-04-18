@@ -32,7 +32,7 @@ client.consume(1)
 client.random(1)
 client.add(uri)
 client.play()
-time.sleep(1)
+time.sleep(5)
 print(client.currentsong())
 for x in range(1, 10):
     client.next()
