@@ -31,14 +31,26 @@ client.clear()
 client.consume(1)
 client.random(1)
 client.add(uri)
+# print(client.playlist())
 client.play()
 time.sleep(5)
+'''
 print(client.currentsong())
 for x in range(1, 10):
     client.next()
     time.sleep(0.2)
     print(client.currentsong())
     time.sleep(5)
+'''
+
+while True:
+    try:
+        print(client.currentsong())
+        time.sleep(3)
+    except KeyboardInterrupt:
+        print('Terminated by CTRL-C')
+        # logging.info('Terminated by CTRL-C')
+        break
 
 client.stop()
 client.disconnect()
