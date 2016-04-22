@@ -21,6 +21,12 @@ class baconfyclient(object):
         # self.arg = arg
         self.connect()
 
+    def play(self):
+        self.client.play()
+
+    def next(self):
+        self.client.next()
+
     def connect(self):
         self.client = MPDClient()
 
@@ -40,8 +46,7 @@ class baconfyclient(object):
         return res
 
     def currentsong(self):
-        print('test')
-
+        # print('test')
         songInfo = self.client.currentsong()
         # print(type(songInfo))
         # print(songInfo['time'])
