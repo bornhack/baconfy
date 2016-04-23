@@ -26,8 +26,6 @@
 </div>
 <br>
 <pre>
-	{% for c,co in context %}
-	<p>{{ c|pprint }}</p>-<p>{{ co|pprint }}</p>
-	{% endfor %}
+{{ data | pprint }}
 </pre>
 {% include "footer.html" %}
