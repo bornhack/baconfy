@@ -5,6 +5,7 @@ from mpd import (MPDClient, CommandError)
 from socket import error as SocketError
 from sys import exit
 import time
+import json
 # import datetime
 # import time
 # SETTINGS
@@ -24,8 +25,25 @@ class baconfyclient(object):
     def play(self):
         self.client.play()
 
+    def pause(self):
+        self.client.pause()
+
+    def prev(self):
+        self.client.consume(0)
+        self.client.previous()
+
     def next(self):
+        self.client.consume(0)
         self.client.next()
+
+    def seek(self):
+        return self.client.status()
+
+    def status(self):
+        return self.client.status()
+
+    def percentage(self, part, whole):
+        return 100 * float(part)/float(whole)
 
     def connect(self):
         self.client = MPDClient()
@@ -40,6 +58,8 @@ class baconfyclient(object):
                 self.client.password(PASSWORD)
             except CommandError:
                 exit(1)
+        self.client.consume(0)
+        self.client.random(1)
 
     def sec2min(self, seconds):
         res = time.strftime('%M:%S', time.gmtime(int(seconds)))
@@ -48,14 +68,16 @@ class baconfyclient(object):
     def currentsong(self):
         # print('test')
         songInfo = self.client.currentsong()
+        status = self.client.status()
         # print(type(songInfo))
         # print(songInfo['time'])
-        return('Currently Playing: %s - %s [%s] (%s)' % (
-            songInfo['artist'],
-            songInfo['title'],
-            self.sec2min(songInfo['time']),
-            songInfo['album']
-        ))
+        # return('Currently Playing: %s - %s [%s] (%s)' % (
+        #     songInfo['artist'],
+        #     songInfo['title'],
+        #     self.sec2min(songInfo['time']),
+        #     songInfo['album']
+        # ))
+        return {'song': songInfo, 'status': status}
 
     def nextsong(self):
         self.client.next()

@@ -3,6 +3,7 @@ from .forms import NameForm
 from django import forms
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
+import pprint
 
 
 def index(request):
@@ -35,11 +36,24 @@ def actionhandler2(request, action):
 def actionhandler(request, action):
     client = baconfy.baconfyclient()
     if action == 'playing':
-        client.play()
         songInfo = client.currentsong()
-        return render(request, 'play.html', {'msg': songInfo})
+        return render(request, 'play.html', {
+            'data': songInfo,
+            'playPercentage': 100 * float(songInfo['status']['elapsed'])/float(songInfo['song']['time']),
+            'played': client.sec2min(int(round(float(songInfo['status']['elapsed'])))),
+            'songtime': client.sec2min(songInfo['song']['time']),
+        })
+    elif action == 'play':
+        client.play()
+        return HttpResponseRedirect('/badmin/playing')
     elif action == 'next':
         client.next()
+        return HttpResponseRedirect('/badmin/playing')
+    elif action == 'prev':
+        client.prev()
+        return HttpResponseRedirect('/badmin/playing')
+    elif action == 'pause':
+        client.pause()
         return HttpResponseRedirect('/badmin/playing')
     else:
         return HttpResponse('Unknown action')

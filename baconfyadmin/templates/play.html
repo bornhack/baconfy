@@ -1,2 +1,33 @@
-<a href="../next">Next song</a>
-<h1>{{ msg }}</h1>
+{% include "header.html" %}
+<meta http-equiv="refresh" content="5">
+<div class="row">
+	<div class="col-md-4">
+	</div>
+	<div class="col-md-4" align="center">
+		<a class="btn btn-lg btn-info" href="../prev" role="button">Prev song</a>
+		<a class="btn btn-lg btn-warning" href="../pause" role="button">Pause song</a>
+		<a class="btn btn-lg btn-success" href="../play" role="button">Play song</a>
+		<a class="btn btn-lg btn-info" href="../next" role="button">Next song</a>
+	</div>
+	<div class="col-md-4">
+	<span class="badge">{{ played }} / {{ songtime }}</span>
+	</div>
+</div>
+<br>
+<div class="alert alert-success" role="alert">
+	<center>
+		{{ data.song.artist}} - {{ data.song.title }} ( {{ data.song.album }} )
+	</center>
+</div>
+<div class="progress">
+	<div class="progress-bar-success progress-bar-striped active" role="progressbar" aria-valuenow="{{ data.status.elapsed }}" aria-valuemin="0" aria-valuemax="{{ data.song.time }}" style="width: {{ playPercentage }}%;">
+		<center><span>{{ played }} / {{ songtime }}</span></center>
+	</div>
+</div>
+<br>
+<pre>
+	{% for c,co in context %}
+	<p>{{ c|pprint }}</p>-<p>{{ co|pprint }}</p>
+	{% endfor %}
+</pre>
+{% include "footer.html" %}

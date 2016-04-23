@@ -28,9 +28,9 @@ if PASSWORD:
     except CommandError:
         exit(1)
 client.clear()
-client.consume(1)
-client.random(1)
 client.add(uri)
+client.consume(0)
+client.random(1)
 # print(client.playlist())
 client.play()
 time.sleep(5)
