@@ -3,6 +3,7 @@ from .forms import NameForm
 from django import forms
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
+import json
 import pprint
 
 
@@ -55,6 +56,15 @@ def actionhandler(request, action):
     elif action == 'pause':
         client.pause()
         return HttpResponseRedirect('/badmin/playing')
+    elif action == 'progress':
+        songInfo = client.currentsong()
+        res = round(100 * float(songInfo['status']['elapsed'])/float(songInfo['song']['time']),0)
+        return HttpResponse(json.dumps({
+                'song': songInfo['song'],
+                'status': songInfo['status'],
+                'percentage': res,
+            }))
+        #return HttpResponse('60')
     else:
         return HttpResponse('Unknown action')
     # return HttpResponse(client.currentsong())

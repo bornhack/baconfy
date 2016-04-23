@@ -1,31 +1,53 @@
 {% include "header.html" %}
-<meta http-equiv="refresh" content="5">
+<!-- <meta http-equiv="refresh" content="5"> -->
+
+
+
 <div class="row">
-	<div class="col-md-4">
+	<div class="col-md-4" align="right"> 
+	<img src="/static/bacon.png" height='10%'>
 	</div>
 	<div class="col-md-4" align="center">
+		<br>
 		<a class="btn btn-lg btn-info" href="../prev" role="button">Prev song</a>
 		<a class="btn btn-lg btn-warning" href="../pause" role="button">Pause song</a>
 		<a class="btn btn-lg btn-success" href="../play" role="button">Play song</a>
 		<a class="btn btn-lg btn-info" href="../next" role="button">Next song</a>
 	</div>
 	<div class="col-md-4">
-	<span class="badge">{{ played }} / {{ songtime }}</span>
+		<h1 id="playtime-badge">{{ played }} / {{ songtime }}</h1>
 	</div>
 </div>
 <br>
-<div class="alert alert-success" role="alert">
-	<center>
-		{{ data.song.artist}} - {{ data.song.title }} ( {{ data.song.album }} )
-	</center>
-</div>
-<div class="progress">
-	<div class="progress-bar-success progress-bar-striped active" role="progressbar" aria-valuenow="{{ data.status.elapsed }}" aria-valuemin="0" aria-valuemax="{{ data.song.time }}" style="width: {{ playPercentage }}%;">
-		<center><span>{{ played }} / {{ songtime }}</span></center>
+<div class="row">
+	<div class="col-md-2">
+	</div>
+	<div class="col-md-8">
+
+		<div class="alert alert-success" role="alert">
+			<center>
+				<span id="artist">{{ data.song.artist}}</span> - <span id='title'>{{ data.song.title }}</span> ( <span id='album'>{{ data.song.album }}</span> )
+			</center>
+		</div>
+
+		<div class="progress">
+			<div id="progress-bar" class="progress-bar progress-bar-success progress-bar-striped active" role="progressbar"
+			aria-valuenow="" aria-valuemin="0" aria-valuemax="100" style="width:{{ playPercentage }}%">
+		</div>
 	</div>
 </div>
+<div class="col-md-2">
+</div>
+</div>
 <br>
-<pre>
-{{ data | pprint }}
-</pre>
+<div class="row">
+	<div class="col-md-2">
+	</div>
+	<div class="col-md-8">
+		<pre id="debug">
+		</pre>
+	</div>
+	<div class="col-md-2">
+	</div>
+</div>
 {% include "footer.html" %}
