@@ -13,7 +13,8 @@ PORT = '6600'
 PASSWORD = "password"
 ###
 # Chill test sounds
-uri = 'spotify:user:b584371:playlist:4zlvIZSMVmeb0N6ZgLU7sk'
+# uri = 'spotify:user:b584371:playlist:4zlvIZSMVmeb0N6ZgLU7sk'
+uri = 'spotify:user:b584371:playlist:06nxCXR3zlRAxwqAz6FfaD'
 
 client = MPDClient()
 
@@ -28,9 +29,9 @@ if PASSWORD:
     except CommandError:
         exit(1)
 client.clear()
+client.random(1)
 client.add(uri)
 client.consume(0)
-client.random(1)
 # client.crossfade(3)
 # print(client.playlist())
 client.play()

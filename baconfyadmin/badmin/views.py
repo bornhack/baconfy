@@ -38,27 +38,37 @@ def actionhandler(request, action):
     client = baconfy.baconfyclient()
     if action == 'playing':
         songInfo = client.currentsong()
-        return render(request, 'play.html', {
-            'data': songInfo,
-            'playPercentage': 100 * float(songInfo['status']['elapsed'])/float(songInfo['song']['time']),
-            'played': client.sec2min(int(round(float(songInfo['status']['elapsed'])))),
-            'songtime': client.sec2min(songInfo['song']['time']),
-        })
+        if songInfo['status']['state'] != 'stop':
+            tmpldata = {
+                'data': songInfo,
+                'playPercentage': 100 * float(songInfo['status']['elapsed'])/float(songInfo['song']['time']),
+                'played': client.sec2min(int(round(float(songInfo['status']['elapsed'])))),
+                'songtime': client.sec2min(songInfo['song']['time']),
+                'playlist': client.playlist(),
+            }
+        else:
+            tmpldata = None
+        return render(request, 'play.html', tmpldata)
     elif action == 'play':
         client.play()
-        return HttpResponseRedirect('/badmin/playing')
+        return HttpResponseRedirect('/badmin/playing/')
     elif action == 'next':
         client.next()
-        return HttpResponseRedirect('/badmin/playing')
+        return HttpResponseRedirect('/badmin/playing/')
     elif action == 'prev':
         client.prev()
-        return HttpResponseRedirect('/badmin/playing')
+        return HttpResponseRedirect('/badmin/playing/')
+    elif action == 'init':
+        client.init1337()
+        return HttpResponseRedirect('/badmin/playing/')
     elif action == 'pause':
         client.pause()
-        return HttpResponseRedirect('/badmin/playing')
+        return HttpResponseRedirect('/badmin/playing/')
     elif action == 'progress':
         songInfo = client.currentsong()
-        res = round(100 * float(songInfo['status']['elapsed'])/float(songInfo['song']['time']),0)
+        res = round(100 * float(songInfo['status']['elapsed'])/float(songInfo['song']['time']),4)
+        # pprint.pprint(client.playlist())
+        # print(type(client.playlist()))
         return HttpResponse(json.dumps({
                 'song': songInfo['song'],
                 'status': songInfo['status'],

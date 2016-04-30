@@ -5,7 +5,7 @@
 
 <div class="row">
 	<div class="col-md-4" align="right"> 
-	<img src="/static/bacon.png" height='10%'>
+		<img src="/static/bacon.png" height='10%'>
 	</div>
 	<div class="col-md-4" align="center">
 		<br>
@@ -44,10 +44,37 @@
 	<div class="col-md-2">
 	</div>
 	<div class="col-md-8">
+		<div id="playlist">
+		<table border='1'>
+			<thead>
+				<th>Pos</th><th>Artist</th><th>Title</th><th>Album</th>
+			</thead>
+		{% for file, songdata in playlist.items %}
+			<tr>
+				<td>{{ songdata.id }}</td>
+				<td>{{ songdata.artist }}</td>
+				<td>{{ songdata.title }}</td>
+				<td>{{ songdata.album }}</td>
+			</tr>
+		{% endfor %}
+		</table>
+		</div>
+	</div>
+	<div class="col-md-2">
+	</div>
+</div>
+<div class="row">
+	<div class="col-md-2">
+	</div>
+	<div class="col-md-8">
 		<pre id="debug">
 		</pre>
 	</div>
 	<div class="col-md-2">
 	</div>
 </div>
+
+
+
+
 {% include "footer.html" %}
